@@ -1,6 +1,6 @@
 {
   "name": "@japan-d2/scrambler",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Converts an integer to another integer that is unpredictable and reversible.",
   "main": "lib/index.js",
   "type": "lib/index.d.ts",
