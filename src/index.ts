@@ -63,7 +63,7 @@ export function swapDigits (digits: number[], table: number[]): number[] {
 
 export function slideDigits (digits: number[], table: number[], multiplier: number): number[] {
   return digits
-    .map((c, i) => (c + (table[i] * multiplier) + 10) % 10)
+    .map((c, i) => (c + ((table[i] % 10) * multiplier) + 10) % 10)
 }
 
 export function restoreSwapDigits (data: number[], table: number[]): number[] {

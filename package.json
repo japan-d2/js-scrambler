@@ -1,6 +1,6 @@
 {
   "name": "@japan-d2/scrambler",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Converts an integer to another integer that is unpredictable and reversible.",
   "main": "lib/index.js",
   "type": "lib/index.d.ts",
@@ -9,8 +9,12 @@
     "build": "tsc -p tsconfig.build.json",
     "prepublishOnly": "npm run build"
   },
-  "files": ["lib"],
-  "keywords": ["Scrambler"],
+  "files": [
+    "lib"
+  ],
+  "keywords": [
+    "Scrambler"
+  ],
   "author": "AOKI Yuto <yuto.aoki@japan-d2.com> (https://japan-d2.com)",
   "homepage": "https://github.com/japan-d2/js-scrambler",
   "license": "MIT",
