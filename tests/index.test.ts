@@ -4,54 +4,76 @@
 import { createScrambler, splitDigits, joinDigits, swapDigits, restoreSwapDigits } from '../src/index'
 
 describe('createScrambler', () => {
-  describe('9 digit or less', () => {
-    const scrambler = createScrambler({
-      digits: 4,
-      n1: BigInt(1101),
-      n2: BigInt(8901),
-      seed: 123456789,
-      stages: 10
-    })
-    const modulo = 10000
-
+  describe('5 digit or less', () => {
     describe('scramble', () => {
       it('should returns bigint', () => {
+        const scrambler = createScrambler({
+          digits: 4,
+          n1: BigInt(1101),
+          n2: BigInt(8901),
+          seed: 123456789,
+          stages: 10
+        })
         expect(scrambler.scramble(BigInt(1))).toBe(BigInt(4055))
       })
 
       it('should bijection', () => {
-        const table = new Set(new Array(modulo).fill(0).map((_, i) => scrambler.scramble(BigInt(i))))
+        for (let x = 2; x < 6; x++) {
+          const scrambler = createScrambler({
+            digits: x,
+            n1: BigInt('9'),
+            n2: BigInt('8'.repeat(x - 1) + '9'),
+            seed: 713947652327,
+            stages: 1
+          })
+          const modulo = 10 ** x
 
-        expect(table.size).toBe(modulo)
+          const table = new Set(new Array(modulo).fill(0).map((_, i) => scrambler.scramble(BigInt(i))))
+
+          expect(table.size).toBe(modulo)
+        }
       })
     })
 
     describe('restore', () => {
       it('should restorable', () => {
-        const source = new Array(modulo).fill(0).map((_, i) => BigInt(i))
-        const scrambled = source.map((n) => scrambler.scramble(n))
-        const restored = scrambled.map((n) => scrambler.restore(n))
+        for (let x = 2; x < 10; x++) {
+          const scrambler = createScrambler({
+            digits: x,
+            n1: BigInt('9'),
+            n2: BigInt('8'.repeat(x - 1) + '9'),
+            seed: 713947652327,
+            stages: 1
+          })
 
-        expect(restored).toEqual(source)
+          const source = new Array(x).fill(0).map((_, i) => BigInt(10) ** BigInt(i))
+          const scrambled = source.map((n) => scrambler.scramble(n))
+          const restored = scrambled.map((n) => scrambler.restore(n))
+
+          expect(restored).toEqual(source)
+        }
       })
     })
   })
-  describe('10 digit or more', () => {
-    const scrambler = createScrambler({
-      digits: 12,
-      n1: BigInt('485858833121'),
-      n2: BigInt('722846933281'),
-      seed: 123456789,
-      stages: 10
-    })
 
+  describe('6 digit or more', () => {
     describe('restore', () => {
       it('should restorable', () => {
-        const source = new Array(12).fill(0).map((_, i) => BigInt(i) ** BigInt(10))
-        const scrambled = source.map((n) => scrambler.scramble(n))
-        const restored = scrambled.map((n) => scrambler.restore(n))
+        for (let x = 6; x < 100; x++) {
+          const scrambler = createScrambler({
+            digits: x,
+            n1: BigInt('9'),
+            n2: BigInt('8'.repeat(x - 1) + '9'),
+            seed: 713947652327,
+            stages: 1
+          })
 
-        expect(restored).toEqual(source)
+          const source = new Array(x).fill(0).map((_, i) => BigInt(10) ** BigInt(i))
+          const scrambled = source.map((n) => scrambler.scramble(n))
+          const restored = scrambled.map((n) => scrambler.restore(n))
+
+          expect(restored).toEqual(source)
+        }
       })
     })
   })

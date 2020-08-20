@@ -34,12 +34,7 @@ export function generateTables (length: number, stages: number, seed: number): n
 }
 
 export function splitDigits (n: bigint, digits: number): number[] {
-  const d: number[] = []
-
-  while (n >= 1) {
-    d.unshift(Math.floor(Number(n % BigInt(10))))
-    n = n / BigInt(10)
-  }
+  const d = n.toString().split('').map(Number)
 
   while (d.length < digits) {
     d.unshift(0)
@@ -49,9 +44,7 @@ export function splitDigits (n: bigint, digits: number): number[] {
 }
 
 export function joinDigits (digits: number[]): bigint {
-  return digits
-    .map((n, i) => n * 10 ** (digits.length - i - 1))
-    .reduce((a, b) => a + BigInt(b), BigInt(0))
+  return BigInt(digits.join(''))
 }
 
 export function swapDigits (digits: number[], table: number[]): number[] {
